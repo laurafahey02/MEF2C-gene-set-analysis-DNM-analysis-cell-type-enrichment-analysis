@@ -1,29 +1,14 @@
 # MEF2C-genetic-analysis
 
-## MAGMA Gene-set Analysis
-#### Step 1: Annotation
-Map SNPs from GWAS results on to genes (GRCh37/hg19 start-stop coordinates +/-20kb).
+### MAGMA Gene-set Analysis (GSA.sh)
 
-Reference data files (g100_eur) and gene locations file were obtained from the [MAGMA homepage](https://ctg.cncr.nl/software/magma)
-```
-magma --annotate window=20,20 --snp-loc g1000_eur.bim --gene-loc NCBI37.3.gene.loc --out ncbi37_eur
-```
-#### Step 2: Gene analysis 
-Compute gene P values for each GWAS dataset (ASD, SCZ, ID and EA).
-```
-magma --bfile g1000_eur --pval [summary statistic file] N=[number of samples] --gene-annot ncbi37_eur.genes.annot --out [output_file_name] 
-```
+A gene-set analysis (GSA) is a statistical method for simultaneously analysing multiple genetic markers in order to determine their joint effect. We performed GSA using [MAGMA](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004219) and GWAS summary statistics for [SZ](https://www.nature.com/articles/s41588-018-0059-2) (40,675 cases and 64,643 controls), [ASD](https://www.nature.com/articles/s41588-019-0344-8) (18,381 cases and 27,969 controls), [IQ](https://www.nature.com/articles/s41588-018-0152-6) (269,867 individuals) and [EA](https://www.nature.com/articles/s41588-018-0147-3) (766,345 individuals). 
 
-#### Step 3: Gene-set analysis
-Test if the genes in each gene-set are more strongly associated with either phenotype than other genes in the genome.
 
-First convert a list of HGNC symbols to entrez IDs in the file format accepted by MAGMA by running hgnc2entrez.R.
+### Enrichment analysis for genes containing de novo mutations (DNM_analysis.R)
 
-Combine multiple genesets together:
-```
-awk 'FNR==1 && NR!=1 {print '\n'}{print}' geneset1.tab geneset2.tab > genesets.tab
-```
-Perform the gene-set analysis on all .raw files (output of step 2) for each geneset in genesets.tab 
-```
-for i in *.raw; do id=$(echo ${i} | sed 's/.raw//'); magma --gene-results ${id}.raw --set-annot genesets.tab --out ${id}.results; done
-```
+Lists of genes harbouring DNMs identified in patients with SZ (N=1,024), ASD (N=3,985), ID (N=192) and in unaffected siblings (N=1,995) and controls (N=54) based on exome sequencing of trios were sourced from [Genovese et al. 2016](https://www.nature.com/articles/nn.4402). DNMs were categorized as silent, missense and loss-of-function (includes splice and nonsense). We tested for enrichment of our MEF2C gene-set in these gene lists using the R package, [denovolyzeR](http://denovolyzer.org/).
+
+### Enrichment analysis of single cell transcriptomic data from the mouse nervous system
+
+The expression weighted cell-type enrichment [(EWCE)](https://github.com/NathanSkene/EWCE) R package represents a method to statistically evaluate if a set of genes (e.g. our MEF2C gene-set) has higher expression within a particular cell type than can be reasonably expected by chance. The probability distribution for this is estimated by randomly generating gene-sets of equal length from a set of background genes. We used scRNA-seq data from 19 regions across the central and peripheral nervous system of post-natal day (P) 12-30 and 6-8 week old mice [(Zeisel et al. 2018)](https://pubmed.ncbi.nlm.nih.gov/30096314/) and from nine regions of the adult (P60-70) mouse brain [(Saunders et al. 2018)](https://pubmed.ncbi.nlm.nih.gov/30096299/).
