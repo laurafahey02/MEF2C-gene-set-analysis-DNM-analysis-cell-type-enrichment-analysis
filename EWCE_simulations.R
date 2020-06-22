@@ -20,10 +20,6 @@ mouse = useMart("ensembl", dataset = "mmusculus_gene_ensembl")
 all_hgnc <- getBM(attributes = ("hgnc_symbol"), mart = human)
 human.bg <- all_hgnc$hgnc_symbol
 
-# mgi to hgnc
-#genes = getLDS(attributes = c("mgi_symbol"), filters = "mgi_symbol", values = genelist ,mart = mouse, attributesL = c("hgnc_symbol"), martL = human, uniqueRows=T)
-#human.hits <- genes$HGNC.symbol
-
 #  Get 'sct_data' ready
 expData = exp_mat_fixed
 l1=annot$ClusterName
