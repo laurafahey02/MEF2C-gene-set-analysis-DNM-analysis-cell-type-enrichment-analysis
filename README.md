@@ -8,9 +8,9 @@ We performed GSA using [MAGMA](https://journals.plos.org/ploscompbiol/article?id
 
 hgnc2entrez.R was used to convert a list of HGNC symbols into entrez IDs in the format accepted by MAGMA and the analyis was run according to GSA.sh.
 
-### Enrichment analysis for genes containing de novo mutations (DNM_analysis.R)
+### Enrichment analysis for genes containing de novo mutations
 
-Lists of genes harbouring DNMs identified in patients with SZ (N=1,024), ASD (N=3,985), ID (N=192) and in unaffected siblings (N=1,995) and controls (N=54) based on exome sequencing of trios were sourced from [Genovese et al. 2016](https://www.nature.com/articles/nn.4402). DNMs were categorized as silent, missense and loss-of-function (includes splice and nonsense). We tested for enrichment of our MEF2C gene-set in these gene lists using the R package, [denovolyzeR](http://denovolyzer.org/), using the script, DNM_analysis.R 
+Lists of genes harbouring DNMs identified in patients with SZ (N=1,024), ASD (N=3,985), ID (N=192) and in unaffected siblings (N=1,995) and controls (N=54) based on exome sequencing of trios were sourced from [Genovese et al. 2016](https://www.nature.com/articles/nn.4402). DNMs were categorized as silent, missense and loss-of-function (includes splice and nonsense). We tested for enrichment of our MEF2C gene-set in these gene lists using the R package, [denovolyzeR](http://denovolyzer.org/), according to, DNM_analysis.R 
 
 ### Enrichment analysis of single cell transcriptomic data from the mouse nervous system
 
